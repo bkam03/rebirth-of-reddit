@@ -10,15 +10,27 @@ function generateContent (){
 
     for( var i = 0; i < arrayOfPosts.length; i++ ){
       var onePost = arrayOfPosts[i].data;
-      console.log( onePost.title, onePost.author, onePost.viewcount );
 
       var postThumbnail = document.createElement( 'div' );
       postThumbnail.className = 'post';
 
-      createPostContent( onePost.thumbnail, 'img', 'src', 'thumbnail', postThumbnail );
-      createPostContent( onePost.title, 'p', 'innerHTML', 'postDescription', postThumbnail );
-      createPostContent( onePost.author, 'p', 'innerHTML', 'postDescription', postThumbnail );
-      createPostContent( onePost.viewcount, 'p', 'innerHTML', 'postDescription',  postThumbnail );
+      var image = createPostContent( onePost.thumbnail, 'img', 'src', 'thumbnail', postThumbnail );
+      postThumbnail.appendChild( image );
+
+      var title = createPostContent( onePost.title, 'p', 'innerHTML', '"postDescription", "title"', postThumbnail );
+      postThumbnail.appendChild( title );
+
+      var author = createPostContent( onePost.author, 'p', 'innerHTML', '"postDescription", "author"', postThumbnail );
+      postThumbnail.appendChild( author );
+
+      var dateCreated = createPostContent( onePost.created, 'p', 'innerHTML', '"postDescription", "dateCreated"', postThumbnail );
+      var date = new Date( onePost.created * 1000 );
+      console.log( typeof date, date );
+      dateCreated.innerHTML = date;
+      postThumbnail.appendChild( dateCreated );
+
+      var viewcount = createPostContent( onePost.viewcount, 'p', 'innerHTML', '"postDescription", "viewcount"',  postThumbnail );
+      postThumbnail.appendChild( dateCreated );
 
       var targetGrid = document.getElementById( 'grid' );
       targetGrid.appendChild( postThumbnail );
@@ -35,8 +47,9 @@ function createPostContent ( contentSource, elementType, attributeType, classNam
   var newElement = document.createElement( elementType );
   newElement[attributeType] = contentSource;
   newElement.className = className;
-  appendTarget.appendChild( newElement );
-}
+  return newElement;
+/*  appendTarget.appendChild( newElement );
+*/}
 
 
 var menuItemArray = document.getElementsByClassName( 'menuItem' );
