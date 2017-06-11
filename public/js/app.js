@@ -22,7 +22,7 @@ function generateContent (){
       title.innerHTML = onePost.title;
       postThumbnail.appendChild( title );
 
-      var metaData = document.createElement( 'div' );
+      var metaData = document.createElement( 'p' );
       metaData.className = 'metaData';
       var dateCreated = new Date( onePost.created * 1000 );
       var dateNow = new Date();
