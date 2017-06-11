@@ -25,10 +25,11 @@ function generateContent (){
       var metaData = document.createElement( 'div' );
       metaData.className = 'metaData';
       var dateCreated = new Date( onePost.created * 1000 );
-     /* var dateNow = new Date();
-      var difference = convertUnixTimeStamp( dateNow - dateCreated );*/
+      var dateNow = new Date();
+      console.log( convertUnixTimeStamp( dateNow.getTime() - dateCreated.getTime() ) );
+      //console.log( dateNow.getTime() );
+      //var difference = convertUnixTimeStamp( dateNow - dateCreated );
       metaData.innerHTML = "by " + onePost.author + " @ " + " Posted " +dateCreated + " @ " + onePost.viewcount;
-      //console.log(dateCreated, '\n', dateNow, '\n', difference);
 
       var summary = createPostContent( 'p', 'summary' );
       summary.innerHTML = onePost.selftext;
