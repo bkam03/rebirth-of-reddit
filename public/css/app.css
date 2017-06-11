@@ -13,9 +13,11 @@
   margin: 10px; }
 
 #mainContainer {
-  background-image: url("../../assets/bg.jpg");
+  background-image: url("../assets/bg.jpg");
   background-size: cover;
-  min-height: 800px; }
+  min-height: 800px;
+  display: flex;
+  justify-content: center; }
 
 #grid {
   display: flex;
