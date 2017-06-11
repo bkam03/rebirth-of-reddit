@@ -13,6 +13,12 @@
 .menuItem {
   color: lightgrey;
   margin: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.menuItem:hover {
+  color: chocolate;
 }
 
 
@@ -42,6 +48,10 @@
   width: 325px;
   background: white;
   margin: 10px;
+}
+
+.post:hover {
+  border: 6px solid orange;
 }
 
 .thumbnail {
