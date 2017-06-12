@@ -17,6 +17,7 @@
 .post {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   width: 325px;
   background: white;
@@ -32,7 +33,9 @@
 
 .title {
   text-align: center;
-  padding: 5px; }
+  padding: 5px;
+  font-size: 18px;
+  font-weight: bold; }
 
 .metaData {
   display: flex;

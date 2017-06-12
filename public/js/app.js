@@ -13,29 +13,30 @@ function generateContent (){
 
       var postThumbnail = document.createElement( 'div' );
       postThumbnail.className = 'post';
+      postThumbnail.addEventListener( 'click', goToPost.bind( onePost ) );
 
-      var image = createPostContent( 'img', 'thumbnail' );
-      image.src = onePost.thumbnail;
-      postThumbnail.appendChild( image );
+      var postImage = createPostContent( 'img', 'thumbnail' );
+      postImage.src = onePost.thumbnail;
+      postThumbnail.appendChild( postImage );
 
-      var title = createPostContent( 'p', 'title' );
-      title.innerHTML = onePost.title;
-      postThumbnail.appendChild( title );
+      var postTitle = createPostContent( 'p', 'title' );
+      postTitle.innerHTML = onePost.title;
+      postThumbnail.appendChild( postTitle );
 
-      var metaData = document.createElement( 'p' );
-      metaData.className = 'metaData';
+      var postMetaData = document.createElement( 'p' );
+      postMetaData.className = 'metaData';
       var dateCreated = new Date( onePost.created * 1000 );
       var dateNow = new Date();
-      console.log( convertUnixTimeStamp( dateNow.getTime() - dateCreated.getTime() ) );
+      //console.log( convertUnixTimeStamp( dateNow.getTime() - dateCreated.getTime() ) );
       //console.log( dateNow.getTime() );
       //var difference = convertUnixTimeStamp( dateNow - dateCreated );
-      metaData.innerHTML = "by " + onePost.author + " @ " + " Posted " +dateCreated + " @ " + onePost.viewcount;
+      postMetaData.innerHTML = "by " + onePost.author + " @ " + " Posted " +dateCreated + " @ " + onePost.viewcount;
+      postThumbnail.appendChild( postMetaData );
 
-      var summary = createPostContent( 'p', 'summary' );
-      summary.innerHTML = onePost.selftext;
-      postThumbnail.appendChild( summary );
+      var postSummary = createPostContent( 'p', 'summary' );
+      postSummary.innerHTML = onePost.selftext;
+      postThumbnail.appendChild( postSummary );
 
-      postThumbnail.appendChild( metaData );
 
       var targetGrid = document.getElementById( 'grid' );
       targetGrid.appendChild( postThumbnail );
@@ -54,7 +55,11 @@ function createPostContent ( elementType, className ){
   return newElement;
 }
 
-function convertUnixTimeStamp ( timeStamp ){
+function goToPost (){
+  window.open( this.url );
+}
+
+/*function convertUnixTimeStamp ( timeStamp ){
   var yearInSeconds = 3155760000;
   var monthInSeconds = 239200000;
   var weekInSeconds = 60480000;
@@ -79,7 +84,7 @@ function convertUnixTimeStamp ( timeStamp ){
   }
 
   return timeElapsed;
-}
+}*/
 
 var menuItemArray = document.getElementsByClassName( 'menuItem' );
 menuItemArray[1].addEventListener( 'click', generateContent );
