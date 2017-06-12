@@ -30,7 +30,9 @@ function generateContent (){
       //console.log( convertUnixTimeStamp( dateNow.getTime() - dateCreated.getTime() ) );
       //console.log( dateNow.getTime() );
       //var difference = convertUnixTimeStamp( dateNow - dateCreated );
-      postMetaData.innerHTML = "by " + onePost.author + " @ " + " Posted " +dateCreated + " @ " + onePost.viewcount;
+      postMetaData.innerHTML = "by " + validateAuthor( onePost.author ) +
+        " @ " + " Posted " +dateCreated +
+        " @ " + validateViewCount( onePost.viewcount );
       postThumbnail.appendChild( postMetaData );
 
       var postSummary = createPostContent( 'p', 'summary' );
@@ -57,6 +59,23 @@ function createPostContent ( elementType, className ){
 
 function goToPost (){
   window.open( this.url );
+}
+
+function validateAuthor ( authorSource ){
+  var authorName = 'unknown';
+  if( authorSource !== null && authorSource !== undefined ){
+    authorName = authorSource;
+  }
+  return authorSource;
+}
+
+function validateViewCount( viewSource ){
+  var viewCount = 'n/a';
+  if( viewSource !== null && viewSource !== undefined ){
+    console.log( viewSource );
+    viewCount = viewSource;
+  }
+  return viewCount;
 }
 
 /*function convertUnixTimeStamp ( timeStamp ){
