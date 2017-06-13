@@ -20,7 +20,7 @@ function generateContent (){
       postThumbnail.appendChild( postImage );
 
       var postTitle = createPostContent( 'p', 'title' );
-      postTitle.innerHTML = onePost.title;
+      postTitle.innerHTML = limitTextLength( onePost.title, 8 );
       postThumbnail.appendChild( postTitle );
 
       var postMetaData = document.createElement( 'p' );
@@ -36,7 +36,7 @@ function generateContent (){
       postThumbnail.appendChild( postMetaData );
 
       var postSummary = createPostContent( 'p', 'summary' );
-      postSummary.innerHTML = onePost.selftext;
+      postSummary.innerHTML = limitTextLength( onePost.selftext, 20 );
       postThumbnail.appendChild( postSummary );
 
 
@@ -64,7 +64,7 @@ function goToPost (){
 function validateAuthor ( authorSource ){
   var authorName = 'unknown';
   if( authorSource !== null && authorSource !== undefined ){
-    authorName = authorSource;
+    authorName = authorSource
   }
   return authorSource;
 }
@@ -76,6 +76,16 @@ function validateViewCount( viewSource ){
     viewCount = viewSource;
   }
   return viewCount;
+}
+
+function limitTextLength( text, wordLength ){
+  var wordArray = text.split(' ');
+  var continuing = '';
+  if( wordArray.length > wordLength ){
+    continuing = '...';
+  }
+  wordArray.length = wordLength;
+  return wordArray.join(' ') + continuing;
 }
 
 /*function convertUnixTimeStamp ( timeStamp ){
