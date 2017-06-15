@@ -8,7 +8,7 @@ Our game plan is to use their subreddit API to create a Reddit clone with our ow
 
 `Ex. http://reddit.com/r/javascript -> http://reddit.com/r/javascript.json`
 
-### Objectives
+### Objectives.
 
 Use the sub-reddit API to achieve the following:
 
