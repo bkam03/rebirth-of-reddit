@@ -25,13 +25,14 @@ function generateContent (){
 
       var postMetaData = document.createElement( 'p' );
       postMetaData.className = 'metaData';
-      var dateCreated = new Date( onePost.created * 1000 );
-      var dateNow = new Date();
+      var dateCreated = onePost.created;
+/*      var dateCreated = new Date( onePost.created * 1000 );
+*/      var timePassed = timeAgoFromEpochTime( dateCreated );
       //console.log( convertUnixTimeStamp( dateNow.getTime() - dateCreated.getTime() ) );
       //console.log( dateNow.getTime() );
       //var difference = convertUnixTimeStamp( dateNow - dateCreated );
       postMetaData.innerHTML = "by " + validateAuthor( onePost.author ) +
-        " @ " + " Posted " +dateCreated +
+        " @ " + " Posted " + timePassed +
         " @ " + validateViewCount( onePost.viewcount );
       postThumbnail.appendChild( postMetaData );
 
@@ -44,7 +45,8 @@ function generateContent (){
       targetGrid.appendChild( postThumbnail );
     }
   });
-  newRequest.open( 'GET', 'https://www.reddit.com/r/NatureIsFuckingLit.json' );
+  newRequest.open( 'GET', this.dataset.url );
+//  newRequest.open( 'GET', 'https://www.reddit.com/r/NatureIsFuckingLit.json' );
   newRequest.send();
 
   var targetGrid = document.getElementById( 'grid' );
@@ -64,7 +66,7 @@ function goToPost (){
 function validateAuthor ( authorSource ){
   var authorName = 'unknown';
   if( authorSource !== null && authorSource !== undefined ){
-    authorName = authorSource
+    authorName = authorSource;
   }
   return authorSource;
 }
@@ -88,33 +90,64 @@ function limitTextLength( text, wordLength ){
   return wordArray.join(' ') + continuing;
 }
 
-/*function convertUnixTimeStamp ( timeStamp ){
-  var yearInSeconds = 3155760000;
-  var monthInSeconds = 239200000;
-  var weekInSeconds = 60480000;
-  var dayInSeconds = 8640000;
-  var hourInSeconds = 360000;
-  var minuteInSeconds = 6000;
+function timeAgoFromEpochTime(epoch) {
+  var secs = ((new Date()).getTime() / 1000) - epoch;
+  Math.floor(secs);
+  var minutes = secs / 60;
+  secs = Math.floor(secs % 60);
+  if (minutes < 1) {
+   return secs + (secs > 1 ? ' seconds ago' : ' second ago');
+  }
+  var hours = minutes / 60;
+  minutes = Math.floor(minutes % 60);
+  if (hours < 1) {
+   return minutes + (minutes > 1 ? ' minutes ago' : ' minute ago');
+  }
+  var days = hours / 24;
+  hours = Math.floor(hours % 24);
+  if (days < 1) {
+   return hours + (hours > 1 ? ' hours ago' : ' hour ago');
+  }
+  var weeks = days / 7;
+  days = Math.floor(days % 7);
+  if (weeks < 1) {
+   return days + (days > 1 ? ' days ago' : ' day ago');
+  }
+  var months = weeks / 4.35;
+  weeks = Math.floor(weeks % 4.35);
+  if (months < 1) {
+   return weeks + (weeks > 1 ? ' weeks ago' : ' week ago');
+  }
+  var years = months / 12;
+  months = Math.floor(months % 12);
+  if (years < 1) {
+   return months + (months > 1 ? ' months ago' : ' month ago');
+  }
+  years = Math.floor(years);
+  return years + (years > 1 ? ' years ago' : ' years ago');
+}
 
-  var timeElapsed = 0;
+( function (){
+  var urlArray = [
+    '',
+    'https://www.reddit.com/r/NatureIsFuckingLit.json',
+    'http://www.reddit.com/r/random.json'
+  ];
 
-  if( timeStamp / yearInSeconds >= 1 ){
-    timeElapsed = timeStamp / yearInSeconds + ' years ago';
-  } else if( timeStamp / monthInSeconds >= 1 ){
-    timeElapsed = timeStamp / monthInSeconds + ' months ago';
-  } else if( timeStamp / weekInSeconds >= 1 ){
-    timeElapsed = timeStamp / weekInSeconds + ' weeks ago';
-  } else if( timeStamp / dayInSeconds >= 1 ){
-    timeElapsed = timeStamp / dayInSeconds + ' days ago';
-  } else if( timeStamp / hourInSeconds >= 1 ){
-    timeElapsed = timeStamp / hourInSeconds + ' hours ago';
-  } else {
-    timeElapsed = timeStamp / minuteInSeconds + ' minutes ago';
+  var menuButtons = document.querySelectorAll( '.menuItem' );
+  console.log( menuButtons );
+  for( var i = 0; i < menuButtons.length; i++ ){
+    menuButtons[i].dataset.url = urlArray[i];
   }
 
-  return timeElapsed;
-}*/
+  var menuItemArray = document.getElementsByClassName( 'menuItem' );
 
-var menuItemArray = document.getElementsByClassName( 'menuItem' );
-menuItemArray[1].addEventListener( 'click', generateContent );
+  for( var menuCount = 0; menuCount < menuItemArray.length; menuCount++ ){
+    menuItemArray[ menuCount ].addEventListener( 'click', generateContent );
+
+  }
+
+
+} )();
+
 
